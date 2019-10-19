@@ -17,16 +17,18 @@
         android:layout_marginVertical="20dp"
         android:textColor="#ffffff"
         android:textStyle="bold"
+        android:onClick="breakdown"
         />
 
     <ImageButton
-        android:id="@+id/energyButton"
+        android:id="@+id/electricityButton"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_below="@id/Title"
-        android:background="@drawable/energy"
+        android:background="@drawable/electricity"
         android:layout_marginHorizontal="30dp"
         android:layout_marginVertical="50dp"
+        android:onClick="breakdown"
         />
 
     <ImageButton
@@ -38,16 +40,18 @@
         android:background="@drawable/water"
         android:layout_marginHorizontal="50dp"
         android:layout_marginVertical="50dp"
+        android:onClick="breakdown"
         />
 
     <ImageButton
         android:id="@+id/gasButton"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_below="@id/energyButton"
+        android:layout_below="@id/electricityButton"
         android:background="@drawable/gas"
         android:layout_marginHorizontal="30dp"
         android:layout_marginVertical="50dp"
+        android:onClick="breakdown"
         />
 
     <ImageButton
@@ -59,6 +63,7 @@
         android:background="@drawable/waste"
         android:layout_marginHorizontal="50dp"
         android:layout_marginVertical="50dp"
+        android:onClick="breakdown"
         />
 
 </RelativeLayout>
