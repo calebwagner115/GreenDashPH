@@ -5,27 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#333333"
+    android:background="@android:color/black"
     tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/Title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="Green Dash"
-        android:textSize="30dp"
-        android:layout_marginVertical="20dp"
-        android:textColor="#ffffff"
-        android:textStyle="bold"
-        android:onClick="breakdown"
-        />
 
     <ImageButton
         android:id="@+id/electricityButton"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_below="@id/Title"
         android:background="@drawable/electricity"
         android:layout_marginHorizontal="30dp"
         android:layout_marginVertical="50dp"
@@ -36,7 +22,6 @@
         android:id="@+id/waterButton"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_below="@id/Title"
         android:layout_alignParentRight="true"
         android:background="@drawable/water"
         android:layout_marginHorizontal="50dp"
@@ -56,12 +41,12 @@
         />
 
     <ImageButton
-        android:id="@+id/wasteButton"
+        android:id="@+id/thermostatButton"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_below="@id/waterButton"
         android:layout_alignParentRight="true"
-        android:background="@drawable/waste"
+        android:background="@drawable/thermostat"
         android:layout_marginHorizontal="50dp"
         android:layout_marginVertical="50dp"
         android:onClick="breakdown"

@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     int electricid;
     int waterid;
     int gasid;
-    int wasteid;
+    int thermostatid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         electricid = R.id.electricityButton;
         waterid=R.id.waterButton;
         gasid=R.id.gasButton;
-        wasteid=R.id.wasteButton;
+        thermostatid=R.id.thermostatButton;
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                                     break;
             case R.id.gasButton: breakdownIntent.putExtra("Breakdown","gas");
                                     break;
-            case R.id.wasteButton: breakdownIntent.putExtra("Breakdown","waste");
+            case R.id.thermostatButton: breakdownIntent.putExtra("Breakdown","thermostat");
                                     break;
             default: breakdownIntent.putExtra("Breakdown","electricity");
                     break;

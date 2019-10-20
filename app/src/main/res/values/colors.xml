@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#64D87F</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="electric">#FFCC33</color>
-    <color name="water">#3399FF</color>
-    <color name="gas">#B22222</color>
-    <color name="waste">#CD853F</color>
+    <color name="electric">#F8E846</color>
+    <color name="water">#5292D2</color>
+    <color name="gas">#DF4757</color>
+    <color name="hvac">#E88C54</color>
 </resources>
