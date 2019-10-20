@@ -35,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.settings) {
-            //TODO Open setings tab
+            //TODO Open setings
+            Intent setting = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(setting);
         }
         if (item.getItemId() == R.id.logout) {
             Intent login = new Intent(MainActivity.this, LoginScreen.class);
