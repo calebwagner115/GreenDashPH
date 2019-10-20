@@ -14,9 +14,19 @@
         android:layout_height="150dp"
         android:background="@drawable/electricity"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginVertical="50dp"
+        android:layout_marginTop="75dp"
         android:onClick="breakdown"
         />
+
+    <TextView
+        android:id="@+id/kWhTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/electricityButton"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="20dp"
+        android:text="6997702906 kWh"/>
 
     <ImageButton
         android:id="@+id/waterButton"
@@ -25,9 +35,20 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/water"
         android:layout_marginHorizontal="50dp"
-        android:layout_marginVertical="50dp"
+        android:layout_marginTop="75dp"
         android:onClick="breakdown"
         />
+
+    <TextView
+        android:id="@+id/kGalTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/waterButton"
+        android:layout_alignParentRight="true"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginHorizontal="75dp"
+        android:layout_marginTop="20dp"
+        android:text="113853 kGal"/>
 
     <ImageButton
         android:id="@+id/gasButton"
@@ -36,9 +57,19 @@
         android:layout_below="@id/electricityButton"
         android:background="@drawable/gas"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginVertical="50dp"
+        android:layout_marginTop="100dp"
         android:onClick="breakdown"
         />
+
+    <TextView
+        android:id="@+id/DthTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gasButton"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginHorizontal="75dp"
+        android:layout_marginTop="20dp"
+        android:text="44454 DTh"/>
 
     <ImageButton
         android:id="@+id/thermostatButton"
@@ -48,8 +79,19 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/thermostat"
         android:layout_marginHorizontal="50dp"
-        android:layout_marginVertical="50dp"
+        android:layout_marginTop="100dp"
         android:onClick="breakdown"
         />
+
+    <TextView
+        android:id="@+id/MMBtuTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/thermostatButton"
+        android:layout_alignParentRight="true"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginHorizontal="75dp"
+        android:layout_marginTop="20dp"
+        android:text="332146 MMBtu"/>
 
 </RelativeLayout>

@@ -47,17 +47,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30dp"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@android:color/white"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/totalImpact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:textColor="@color/gas"
+        android:textAlignment="center"
+        android:textStyle="italic"
+        android:layout_marginHorizontal="20dp"
+        />
+
+    <TextView
+        android:id="@+id/source"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="10dp"
+        android:textColor="@android:color/darker_gray"
+        android:textAlignment="center"
+        />
 
     <TextView
         android:id="@+id/totalCost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30dp"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/electric"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"/>
+        />
 
 </LinearLayout>

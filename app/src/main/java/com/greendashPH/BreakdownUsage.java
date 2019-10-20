@@ -45,6 +45,8 @@ public class BreakdownUsage extends AppCompatActivity {
 
     TextView usage;
     TextView cost;
+    TextView impact;
+    TextView source;
 
     int totalUsage = 0;
     Double totalCost = 0.0;
@@ -67,6 +69,8 @@ public class BreakdownUsage extends AppCompatActivity {
 
         usage = (TextView)findViewById(R.id.totalUsage);
         cost = (TextView)findViewById(R.id.totalCost);
+        impact = (TextView)findViewById(R.id.totalImpact);
+        source = (TextView)findViewById(R.id.source);
 
         axisData = new ArrayList<String>();
         axisValues = new ArrayList();
@@ -82,28 +86,35 @@ public class BreakdownUsage extends AppCompatActivity {
 //                                breakdowntitle.setBackgroundColor(ContextCompat.getColor(this, R.color.electric));
                                 readCSV(R.raw.electricity);
                                 createChart(R.color.electric, " ");
-                                setTotals();
+                                setTotals("kWh");
+                                impact.setText("44860 tons CO2/year");
+                                source.setText("Source: The Nature Conservancy");
                                 break;
             case "water":breakdownImage.setBackgroundResource(R.drawable.water);
                             bkdTitle.setText("Water & Sewer (kGal)");
 //                            breakdowntitle.setBackgroundColor(ContextCompat.getColor(this, R.color.water));
                             readCSV(R.raw.water);
                             createChart(R.color.water, " ");
-                            setTotals();
+                            setTotals("kGal");
                             break;
             case "gas":breakdownImage.setBackgroundResource(R.drawable.gas);
-                        bkdTitle.setText("Natural Gas (dTh)");
+                        bkdTitle.setText("Natural Gas (DTh)");
 //                        breakdowntitle.setBackgroundColor(ContextCompat.getColor(this, R.color.gas));
                         readCSV(R.raw.gas);
                         createChart(R.color.gas, " ");
-                        setTotals();
+                        setTotals("DTh");
+                        impact.setText("2806 tons CO2/year");
+                        source.setText("Source: The Nature Conservancy");
                         break;
             case "thermostat":breakdownImage.setBackgroundResource(R.drawable.thermostat);
                         bkdTitle.setText("HVAC (MMBtu)");
 //                        breakdowntitle.setBackgroundColor(ContextCompat.getColor(this, R.color.waste));
                         readCSV(R.raw.hvac);
                         createChart(R.color.hvac, " ");
-                        setTotals();
+                        setTotals("MMBtu");
+                        impact.setText("");
+                        impact.setText("12446 tons CO2/year");
+                        source.setText("Source: The Nature Conservancy");
                         break;
         }
 
@@ -165,10 +176,10 @@ public class BreakdownUsage extends AppCompatActivity {
         lineChartView.setInteractive(true);
     }
 
-    private void setTotals(){
-        usage.setText("Total Consumption: " + totalUsage);
+    private void setTotals(String units){
+        usage.setText("Total: " + totalUsage + " " + units);
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        cost.setText("Total Cost: " + formatter.format(totalCost));
+        cost.setText("          " + formatter.format(totalCost));
     }
 
 }
