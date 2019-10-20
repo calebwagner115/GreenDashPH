@@ -3,8 +3,12 @@ package com.greendashPH;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +25,24 @@ public class MainActivity extends AppCompatActivity {
         waterid=R.id.waterButton;
         gasid=R.id.gasButton;
         wasteid=R.id.wasteButton;
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.settings) {
+            //TODO Open setings tab
+        }
+        if (item.getItemId() == R.id.logout) {
+            Intent login = new Intent(MainActivity.this, LoginScreen.class);
+            startActivity(login);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
