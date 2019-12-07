@@ -121,6 +121,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+            onBackPressed();
+            return true;
+    }
 
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
