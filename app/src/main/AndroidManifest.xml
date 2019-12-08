@@ -21,6 +21,7 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity android:name=".BreakdownUsage" />
+        <activity android:name=".SleepTrack"/>
         <activity
             android:name=".LoginScreen"
             android:label="@string/title_activity_login_screen"

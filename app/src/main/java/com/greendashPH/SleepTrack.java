@@ -6,8 +6,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ public class SleepTrack extends AppCompatActivity implements SensorEventListener
 
     FileOutputStream trackedData;
     OutputStreamWriter osw;
+    BottomNavigationView bottom_menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +42,42 @@ public class SleepTrack extends AppCompatActivity implements SensorEventListener
                 getSystemService(SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(
                 Sensor.TYPE_ACCELEROMETER);
+        bottom_menu = findViewById(R.id.bottom_navigation);
+        bottom_menu.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener()
+    {
+        @Override
+        public boolean onNavigationItemSelected(MenuItem item)
+        {
+            switch (item.getItemId())
+            {
+                case R.id.action_timer:
+                    Intent r = new Intent(SleepTrack.this, Alarm.class);
+                    startActivity(r);
+//                    finish();
+                    break;
+                case R.id.action_daily:
+//                    Intent s = new Intent(SleepTrack.this, SleepTrack.class);
+//                    startActivity(s);
+                    finish();
+                    break;
+                case R.id.action_history:
+                    Intent t = new Intent(SleepTrack.this, MainActivity.class);
+                    startActivity(t);
+                    finish();
+                    break;
+                case R.id.action_setting:
+                    Intent u = new Intent(SleepTrack.this, SettingsActivity.class);
+                    startActivity(u);
+                    //finish();
+                    break;
+            }
+            return false;
+        }
+    };
     public void onStart(View view) {
         try {
             trackedData = openFileOutput("trackedData.csv", Context.MODE_PRIVATE);

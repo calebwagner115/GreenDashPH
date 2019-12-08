@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.action_daily:
-                    Intent s = new Intent(MainActivity.this, Alarm.class);
+                    Intent s = new Intent(MainActivity.this, SleepTrack.class);
                     startActivity(s);
                     finish();
                     break;
@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.action_setting:
-                    Intent u = new Intent(MainActivity.this, Alarm.class);
+                    Intent u = new Intent(MainActivity.this, SettingsActivity.class);
                     startActivity(u);
-                    finish();
+                    //finish();
                     break;
             }
             return false;

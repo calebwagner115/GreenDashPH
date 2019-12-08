@@ -98,7 +98,7 @@ public class LoginScreen extends AppCompatActivity  {
 
         ProgressBar pb = findViewById(R.id.login_progress);
         pb.setVisibility(View.VISIBLE);
-        Intent homepage = new Intent(this, MainActivity.class);
+        Intent homepage = new Intent(this, Alarm.class);
         finish();
         startActivity(homepage);
 
