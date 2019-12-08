@@ -1,6 +1,7 @@
 package com.greendashPH;
 
 import android.content.Intent;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     int waterid;
     int gasid;
     int thermostatid;
+    BottomNavigationView bottom_menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,44 @@ public class MainActivity extends AppCompatActivity {
         waterid=R.id.waterButton;
         gasid=R.id.gasButton;
         thermostatid=R.id.thermostatButton;
+        bottom_menu = findViewById(R.id.bottom_navigation);
+        bottom_menu.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener()
+    {
+        @Override
+        public boolean onNavigationItemSelected(MenuItem item)
+        {
+            switch (item.getItemId())
+            {
+                case R.id.action_timer:
+                    Intent r = new Intent(MainActivity.this, Alarm.class);
+                    startActivity(r);
+                    finish();
+                    break;
+                case R.id.action_daily:
+                    Intent s = new Intent(MainActivity.this, SleepTrack.class);
+                    startActivity(s);
+                    finish();
+                    break;
+                case R.id.action_history:
+                    Intent t = new Intent(MainActivity.this, Alarm.class);
+                    startActivity(t);
+                    finish();
+                    break;
+                case R.id.action_setting:
+                    Intent u = new Intent(MainActivity.this, SettingsActivity.class);
+                    startActivity(u);
+                    //finish();
+                    break;
+            }
+            return false;
+        }
+    };
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
