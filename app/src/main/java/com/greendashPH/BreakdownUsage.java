@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,7 +39,7 @@ public class BreakdownUsage extends AppCompatActivity {
     LineChartView lineChartView;
 
     List<String> axisData;
-    List<Integer> yAxisData;
+    List<Float> yAxisData;
 
     List axisValues;
     List yAxisValues;
@@ -74,7 +75,7 @@ public class BreakdownUsage extends AppCompatActivity {
 
         axisData = new ArrayList<String>();
         axisValues = new ArrayList();
-        yAxisData = new ArrayList<Integer>();
+        yAxisData = new ArrayList<Float>();
 
         if (isPortrait()){
             Toast.makeText(BreakdownUsage.this, "Turn for better view", Toast.LENGTH_SHORT ).show();
@@ -84,7 +85,8 @@ public class BreakdownUsage extends AppCompatActivity {
             case "electricity":breakdownImage.setBackgroundResource(R.drawable.electricity);
                                 bkdTitle.setText("Electricity (kWh)");
 //                                breakdowntitle.setBackgroundColor(ContextCompat.getColor(this, R.color.electric));
-                                readCSV(R.raw.electricity);
+//                                readCSV(getFileStreamPath("trackedData.csv"));
+                                readCSV();
                                 createChart(R.color.electric, " ");
                                 setTotals("kWh");
                                 impact.setText("44860 tons CO2/year");
@@ -93,14 +95,14 @@ public class BreakdownUsage extends AppCompatActivity {
             case "water":breakdownImage.setBackgroundResource(R.drawable.water);
                             bkdTitle.setText("Water & Sewer (kGal)");
 //                            breakdowntitle.setBackgroundColor(ContextCompat.getColor(this, R.color.water));
-                            readCSV(R.raw.water);
+//                            readCSV(getFileStreamPath("trackedData.csv"));
                             createChart(R.color.water, " ");
                             setTotals("kGal");
                             break;
             case "gas":breakdownImage.setBackgroundResource(R.drawable.gas);
                         bkdTitle.setText("Natural Gas (DTh)");
 //                        breakdowntitle.setBackgroundColor(ContextCompat.getColor(this, R.color.gas));
-                        readCSV(R.raw.gas);
+//                        readCSV(getFileStreamPath("trackedData.csv"));
                         createChart(R.color.gas, " ");
                         setTotals("DTh");
                         impact.setText("2806 tons CO2/year");
@@ -109,7 +111,7 @@ public class BreakdownUsage extends AppCompatActivity {
             case "thermostat":breakdownImage.setBackgroundResource(R.drawable.thermostat);
                         bkdTitle.setText("HVAC (MMBtu)");
 //                        breakdowntitle.setBackgroundColor(ContextCompat.getColor(this, R.color.waste));
-                        readCSV(R.raw.hvac);
+//                        readCSV(getFileStreamPath("trackedData.csv"));
                         createChart(R.color.hvac, " ");
                         setTotals("MMBtu");
                         impact.setText("");
@@ -124,17 +126,18 @@ public class BreakdownUsage extends AppCompatActivity {
         return (getResources().getConfiguration().orientation==ORIENTATION_PORTRAIT);
     }
 
-    private void readCSV(int file) {
+    private void readCSV() {
         try {
-            InputStream inputStream = getResources().openRawResource(file);
+            FileInputStream inputStream = openFileInput("trackedData.csv");
+//            InputStream inputStream = getResources().openRawResource(file);
             BufferedReader csvReader = new BufferedReader(new InputStreamReader(inputStream));
             String row;
             while ((row = csvReader.readLine()) != null) {
                 String[] data = row.split(",");
-                axisData.add(data[0]);
-                yAxisData.add(Integer.parseInt(data[1]));
-                totalUsage += Integer.parseInt(data[1]);
-                totalCost += Double.parseDouble(data[2]);
+                axisData.add(data[1]);
+                yAxisData.add(Float.parseFloat(data[0]));
+//                totalUsage += Integer.parseInt(data[1]);
+//                totalCost += Double.parseDouble(data[2]);
             }
             csvReader.close();
         } catch (IOException e) {
@@ -164,14 +167,14 @@ public class BreakdownUsage extends AppCompatActivity {
 
         lineChartView.setLineChartData(data);
 
-        Axis axis = new Axis();
-        axis.setValues(axisValues);
-        axis.setName("Date");
-        data.setAxisXBottom(axis);
-
-        Axis yAxis = new Axis();
-        yAxis.setName(offset);
-        data.setAxisYLeft(yAxis);
+//        Axis axis = new Axis();
+//        axis.setValues(axisValues);
+//        axis.setName("Date");
+//        data.setAxisXBottom(axis);
+//
+//        Axis yAxis = new Axis();
+//        yAxis.setName(offset);
+//        data.setAxisYLeft(yAxis);
 
         lineChartView.setInteractive(true);
     }
