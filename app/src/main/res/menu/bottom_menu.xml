@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_favorites"
+        android:id="@+id/action_timer"
         android:enabled="true"
         android:icon="@drawable/ic_timer_black_24dp"
         android:title="Timer"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_schedules"
+        android:id="@+id/action_daily"
         android:enabled="true"
         android:icon="@drawable/ic_poll_black_36dp"
         android:title="Daily Stats"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_music"
+        android:id="@+id/action_history"
         android:enabled="true"
         android:icon="@drawable/ic_today_black_24dp"
         android:title="Sleep History"
