@@ -60,9 +60,9 @@ public class Alarm extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //Start your camera handling here
                     perm=1;
-                    Toast.makeText(getApplicationContext(),"You Access", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"You Access", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(),"You declined to allow the app to access your camera", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"You declined to allow the app to access your camera", Toast.LENGTH_SHORT).show();
 
                 }
                 break;
