@@ -1,6 +1,7 @@
 package com.greendashPH;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
@@ -12,6 +13,8 @@ import android.os.PersistableBundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -65,10 +68,8 @@ public class Alarm extends AppCompatActivity {
         bottom_menu.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         textAlarmPrompt = (TextView) findViewById(R.id.alarmprompt);
         SetAlarm = (Button) findViewById(R.id.startAlaram);
-        bottom_menu.setSelectedItemId(0);
+        bottom_menu.setSelectedItemId(R.id.action_timer);
 
-
-        //buttonstartSetDialog = (Button) findViewById(R.id.startAlaram);
         SetAlarm.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -85,6 +86,26 @@ public class Alarm extends AppCompatActivity {
                 }
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.settings) {
+            //TODO Open setings
+            Intent setting = new Intent(Alarm.this, SettingsActivity.class);
+            startActivity(setting);
+        }
+        if (item.getItemId() == R.id.logout) {
+            Intent login = new Intent(Alarm.this, LoginScreen.class);
+            startActivity(login);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -116,9 +137,6 @@ public class Alarm extends AppCompatActivity {
             switch (item.getItemId())
             {
                 case R.id.action_timer:
-//                    Intent r = new Intent(Alarm.this, Alarm.class);
-//                    startActivity(r);
-//                    finish();
                     break;
                 case R.id.action_daily:
                     Intent s = new Intent(Alarm.this, SleepTrack.class);
@@ -134,10 +152,9 @@ public class Alarm extends AppCompatActivity {
                 case R.id.action_setting:
                     Intent u = new Intent(Alarm.this, SettingsActivity.class);
                     startActivity(u);
-                    //finish();
-                    break;
+                    return false;
             }
-            return false;
+            return true;
         }
     };
 
