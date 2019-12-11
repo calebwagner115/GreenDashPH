@@ -44,7 +44,7 @@ public class BreakdownUsage extends AppCompatActivity {
     TextView quality;
 
     int totalPoints = 0;
-    int goodPoints = 0;
+    double goodPoints = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,7 +173,7 @@ public class BreakdownUsage extends AppCompatActivity {
         int hours = (int)totalHours;
         int minutes = totalMinutes % 60;
         time.setText("" + hours + "h " + minutes + "m in bed" );
-        
+
         double totalPercentage = (goodPoints / totalPoints) * 100;
         int percentage = (int)totalPercentage;
         quality.setText("" + percentage+ "% sleep quality");
