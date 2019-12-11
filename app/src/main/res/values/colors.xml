@@ -3,8 +3,6 @@
     <color name="colorPrimary">#125588</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="electric">#F8E846</color>
-    <color name="water">#5292D2</color>
-    <color name="gas">#DF4757</color>
-    <color name="hvac">#E88C54</color>
+    <color name="blue">#5292D2</color>
+    <color name="orange">#E88C54</color>
 </resources>
