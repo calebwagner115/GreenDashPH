@@ -75,7 +75,7 @@ public class BreakdownUsage extends AppCompatActivity {
             findViewById(R.id.bottom_navigation).setVisibility(View.INVISIBLE);
         }
 
-        breakdownImage.setBackgroundResource(R.drawable.electricity);
+        breakdownImage.setBackgroundResource(R.drawable.sleeping_mask);
         readCSV();
         createChart(R.color.blue, " ");
         setTotals();
