@@ -84,9 +84,9 @@ public class SleepTrack extends AppCompatActivity implements SensorEventListener
 
             osw = new OutputStreamWriter(trackedData);
 
-            Toast.makeText(view.getContext(), "File initialized!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(), "Good Night!", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(view.getContext(), "File not created", Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(), "Could not start sleep tracker!", Toast.LENGTH_SHORT).show();
         }
 
     }

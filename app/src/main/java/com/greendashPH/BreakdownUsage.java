@@ -44,6 +44,8 @@ public class BreakdownUsage extends AppCompatActivity {
     List axisValues;
     List yAxisValues;
 
+    List yAxisLabes;
+
     TextView usage;
     TextView cost;
     TextView impact;
@@ -77,27 +79,29 @@ public class BreakdownUsage extends AppCompatActivity {
         axisValues = new ArrayList();
         yAxisData = new ArrayList<Float>();
 
+        yAxisLabes = new ArrayList<String>();
+
+        yAxisLabes.add("Awake");
+        yAxisLabes.add("Sleep");
+        yAxisLabes.add("Deep Sleep");
+
         if (isPortrait()){
             Toast.makeText(BreakdownUsage.this, "Turn for better view", Toast.LENGTH_SHORT ).show();
         }
 
         switch (breakdown){
             case "electricity":breakdownImage.setBackgroundResource(R.drawable.electricity);
-                                bkdTitle.setText("Electricity (kWh)");
+                                bkdTitle.setText("Sleep Movements");
 //                                breakdowntitle.setBackgroundColor(ContextCompat.getColor(this, R.color.electric));
 //                                readCSV(getFileStreamPath("trackedData.csv"));
                                 readCSV();
                                 createChart(R.color.electric, " ");
                                 setTotals("kWh");
-                                impact.setText("44860 tons CO2/year");
-                                source.setText("Source: The Nature Conservancy");
                                 break;
             case "water":breakdownImage.setBackgroundResource(R.drawable.water);
                             bkdTitle.setText("Water & Sewer (kGal)");
 //                            breakdowntitle.setBackgroundColor(ContextCompat.getColor(this, R.color.water));
 //                            readCSV(getFileStreamPath("trackedData.csv"));
-                            createChart(R.color.water, " ");
-                            setTotals("kGal");
                             break;
             case "gas":breakdownImage.setBackgroundResource(R.drawable.gas);
                         bkdTitle.setText("Natural Gas (DTh)");
@@ -105,8 +109,6 @@ public class BreakdownUsage extends AppCompatActivity {
 //                        readCSV(getFileStreamPath("trackedData.csv"));
                         createChart(R.color.gas, " ");
                         setTotals("DTh");
-                        impact.setText("2806 tons CO2/year");
-                        source.setText("Source: The Nature Conservancy");
                         break;
             case "thermostat":breakdownImage.setBackgroundResource(R.drawable.thermostat);
                         bkdTitle.setText("HVAC (MMBtu)");
@@ -115,8 +117,6 @@ public class BreakdownUsage extends AppCompatActivity {
                         createChart(R.color.hvac, " ");
                         setTotals("MMBtu");
                         impact.setText("");
-                        impact.setText("12446 tons CO2/year");
-                        source.setText("Source: The Nature Conservancy");
                         break;
         }
 
@@ -134,9 +134,13 @@ public class BreakdownUsage extends AppCompatActivity {
             String row;
             while ((row = csvReader.readLine()) != null) {
                 String[] data = row.split(",");
+                Float point = Float.parseFloat(data[0]);
                 axisData.add(data[1]);
-                yAxisData.add(Float.parseFloat(data[0]));
-//                totalUsage += Integer.parseInt(data[1]);
+                yAxisData.add(point);
+                totalUsage += 1;
+                if (point < 2) {
+                    totalCost += 1;
+                }
 //                totalCost += Double.parseDouble(data[2]);
             }
             csvReader.close();
@@ -180,9 +184,17 @@ public class BreakdownUsage extends AppCompatActivity {
     }
 
     private void setTotals(String units){
-        usage.setText("Total: " + totalUsage + " " + units);
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        cost.setText("          " + formatter.format(totalCost));
+        int totalMinutes = totalUsage / 60;
+        double totalHours = totalMinutes / 60;
+        totalHours = Math.floor(totalHours);
+        int hours = (int)totalHours;
+        int minutes = totalMinutes % 60;
+        usage.setText("" + hours + "h " + minutes + "m in bed" );
+        double percentage = (totalCost / totalUsage) * 100;
+        int quality = (int) percentage;
+        cost.setText("" + quality + "% sleep quality");
+//        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+//        cost.setText("          " + formatter.format(totalCost));
     }
 
 }
