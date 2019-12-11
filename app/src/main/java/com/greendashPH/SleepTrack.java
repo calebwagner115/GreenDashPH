@@ -6,9 +6,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.support.design.internal.BottomNavigationMenu;
+import android.support.design.internal.NavigationMenu;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -41,6 +45,16 @@ public class SleepTrack extends AppCompatActivity implements SensorEventListener
         bottom_menu.setSelectedItemId(R.id.action_daily);
     }
 
+    private void updateNavigationBarState(int actionId){
+        Menu menu = bottom_menu.getMenu();
+        for (int i = 0, size = menu.size(); i < size; i++) {
+            MenuItem item = menu.getItem(i);
+            item.setChecked(item.getItemId() == actionId);
+            //item.ch
+            System.out.println(""+(item.getItemId() == actionId));
+        }
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener()
     {
@@ -52,11 +66,15 @@ public class SleepTrack extends AppCompatActivity implements SensorEventListener
                 case R.id.action_timer:
                     Intent r = new Intent(SleepTrack.this, Alarm.class);
                     startActivity(r);
+
+                     updateNavigationBarState(R.id.action_timer);
 //                    finish();
                     break;
                 case R.id.action_daily:
 //                    Intent s = new Intent(SleepTrack.this, SleepTrack.class);
 //                    startActivity(s);
+                    //updateNavigationBarState(R.id.action_daily);
+
                     //finish();
                     break;
                 case R.id.action_history:
@@ -69,9 +87,10 @@ public class SleepTrack extends AppCompatActivity implements SensorEventListener
                     Intent u = new Intent(SleepTrack.this, SettingsActivity.class);
                     startActivity(u);
                     //finish();
-                    break;
+                    return false;
+
             }
-            return false;
+           return true;
         }
     };
 
