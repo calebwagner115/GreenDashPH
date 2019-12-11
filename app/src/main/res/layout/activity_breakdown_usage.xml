@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,6 +12,7 @@
     tools:context=".BreakdownUsage"
     android:orientation="vertical"
     android:background="@android:color/black">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +32,8 @@
                 android:id="@+id/usageType"
                 android:layout_gravity="center_horizontal"
                 android:textAlignment="center"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@android:color/white"
+                android:text="Sleep Report"/>
 
         </LinearLayout>
         <View
@@ -48,7 +51,7 @@
             />
 
         <TextView
-            android:id="@+id/totalUsage"
+            android:id="@+id/sleepTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30dp"
@@ -58,31 +61,11 @@
             />
 
         <TextView
-            android:id="@+id/totalImpact"
+            android:id="@+id/sleepQuality"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30dp"
-            android:textColor="@color/gas"
-            android:textAlignment="center"
-            android:textStyle="italic"
-            android:layout_marginHorizontal="20dp"
-            />
-
-        <TextView
-            android:id="@+id/source"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="10dp"
-            android:textColor="@android:color/darker_gray"
-            android:textAlignment="center"
-            />
-
-        <TextView
-            android:id="@+id/totalCost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:textColor="@color/electric"
+            android:textColor="@color/orange"
             android:layout_marginHorizontal="20dp"
             />
 
