@@ -109,6 +109,7 @@ public class SleepTrack extends AppCompatActivity implements SensorEventListener
                         z = event.values[2];
                 double gravity = 9.81;
                 float move = Math.abs(x) + Math.abs(y) + Math.abs(z) - (float)gravity;
+                move = Math.abs(move);
 
                 row = "" + move + "," + mLastUpdate + "\n";
 
