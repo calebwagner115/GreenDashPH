@@ -62,7 +62,7 @@ public class SleepTrack extends AppCompatActivity implements SensorEventListener
                 case R.id.action_daily:
 //                    Intent s = new Intent(SleepTrack.this, SleepTrack.class);
 //                    startActivity(s);
-                    finish();
+                    //finish();
                     break;
                 case R.id.action_history:
                     Intent t = new Intent(SleepTrack.this, MainActivity.class);
