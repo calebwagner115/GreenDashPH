@@ -22,11 +22,16 @@ import java.util.Calendar;
 public class Alarm extends AppCompatActivity {
     BottomNavigationView bottom_menu;
     int perm=-1;
+    String status;
+    PendingIntent pendingIntent;
+    Button SetAlarm;
+    AlarmManager alarmManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
+        status="off";
         requestPermissions(new String[] {Manifest.permission.WAKE_LOCK}, 1);
 
 
@@ -35,18 +40,29 @@ public class Alarm extends AppCompatActivity {
         }
 
 
+         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         bottom_menu = findViewById(R.id.bottom_navigation);
         bottom_menu.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         textAlarmPrompt = (TextView) findViewById(R.id.alarmprompt);
+        SetAlarm = (Button) findViewById(R.id.startAlaram);
 
-        buttonstartSetDialog = (Button) findViewById(R.id.startAlaram);
-        buttonstartSetDialog.setOnClickListener(new View.OnClickListener() {
+
+        //buttonstartSetDialog = (Button) findViewById(R.id.startAlaram);
+        SetAlarm.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                textAlarmPrompt.setText("");
-                openTimePickerDialog(false);
+                if(SetAlarm.getText().equals("Set Alarm Time")) {
+                    textAlarmPrompt.setText("");
+                    openTimePickerDialog(false);
 
+                }
+                else{
+                    SetAlarm.setText("Set Alarm Time");
+                    alarmManager.cancel(pendingIntent);
+                    textAlarmPrompt.setText("No Alarm Set");
+                    status="off";
+                }
             }
         });
 
@@ -60,9 +76,9 @@ public class Alarm extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //Start your camera handling here
                     perm=1;
-                    //Toast.makeText(getApplicationContext(),"You Access", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"You Access", Toast.LENGTH_SHORT).show();
                 } else {
-                    //Toast.makeText(getApplicationContext(),"You declined to allow the app to access your camera", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"You declined to allow the app to access your camera", Toast.LENGTH_SHORT).show();
 
                 }
                 break;
@@ -108,11 +124,21 @@ public class Alarm extends AppCompatActivity {
 
         AlarmManager alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        Calendar time = Calendar.getInstance();
-        time.setTimeInMillis(System.currentTimeMillis());
-        time.add(Calendar.SECOND, 5);
-        alarmMgr.set(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
+        if(status.equals("off")){
+            intent.putExtra("status", "on");
+            status="on";
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+            Calendar time = Calendar.getInstance();
+            time.setTimeInMillis(System.currentTimeMillis());
+            time.add(Calendar.SECOND, 5);
+            alarmMgr.set(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
+        } else{
+            Toast.makeText(getApplicationContext(), "stop", Toast.LENGTH_LONG).show();
+            intent.putExtra("status", "off");
+            status="off";
+            sendBroadcast(intent);
+        }
+
     }
 
     TimePicker myTimePicker;
@@ -159,15 +185,32 @@ public class Alarm extends AppCompatActivity {
 
     private void setAlarm(Calendar targetCal) {
 
-        textAlarmPrompt.setText("\n\n***\n" + "Alarm is set "
-                + targetCal.getTime() + "\n" + "***\n");
-
-        Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                getBaseContext(), RQS_1, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(),
-                pendingIntent);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        if(status.equals("off")&&SetAlarm.getText().equals("Set Alarm Time")){
+            intent.putExtra("status", "on");
+            status="on";
+            pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+            Calendar time = Calendar.getInstance();
+            time.setTimeInMillis(System.currentTimeMillis());
+            alarmManager.set(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(), pendingIntent);
+            textAlarmPrompt.setText("\n\n***\n" + "Alarm is set " + targetCal.getTime() + "\n" + "***\n");
+            SetAlarm.setText("Cancel Alarm");
+        }
 
     }
+
+    public void stopAlarm(View v){
+        if(status.equals("on")){
+            Intent intent = new Intent(this, AlarmReceiver.class);
+            intent.putExtra("status", "off");
+            sendBroadcast(intent);
+            status="off";
+        }
+    }
+
+    public static void alarmActivated(){
+
+    }
+
+
 }
