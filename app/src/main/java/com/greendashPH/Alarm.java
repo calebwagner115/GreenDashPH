@@ -7,6 +7,8 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Parcel;
+import android.os.PersistableBundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +28,24 @@ public class Alarm extends AppCompatActivity {
     PendingIntent pendingIntent;
     Button SetAlarm;
     AlarmManager alarmManager;
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putString("status", status); // Saving the Variable theWord
+
+        Bundle b = new Bundle();
+        pendingIntent.describeContents();
+        //outState.putBundle("PendingIntent", );// Saving the ArrayList fiveDefns
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+
+//        theWord = savedInstanceState.getString("theWord"); // Restoring theWord
+//        fiveDefns = savedInstanceState.getStringArrayList("fiveDefns"); //Restoring fiveDefns
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

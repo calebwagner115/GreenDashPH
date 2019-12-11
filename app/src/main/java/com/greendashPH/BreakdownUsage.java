@@ -138,7 +138,7 @@ public class BreakdownUsage extends AppCompatActivity {
                 axisData.add(data[1]);
                 yAxisData.add(point);
                 totalUsage += 1;
-                if (point < 2) {
+                if (point < 0.8) {
                     totalCost += 1;
                 }
 //                totalCost += Double.parseDouble(data[2]);
