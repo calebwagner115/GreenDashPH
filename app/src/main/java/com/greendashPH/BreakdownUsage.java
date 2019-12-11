@@ -1,9 +1,12 @@
 package com.greendashPH;
 
 import android.content.Intent;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,6 +35,7 @@ import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
 public class BreakdownUsage extends AppCompatActivity {
     String breakdown;
+    BottomNavigationView bottom_menu;
     ImageView breakdownImage;
     TextView bkdTitle;
     LinearLayout breakdowntitle;
@@ -59,6 +63,8 @@ public class BreakdownUsage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breakdown_usage);
         Intent breakdownusage = getIntent();
+        bottom_menu = findViewById(R.id.bottom_navigation);
+        bottom_menu.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         getSupportActionBar().hide();
         this.breakdown = breakdownusage.getStringExtra("Breakdown");
@@ -87,6 +93,10 @@ public class BreakdownUsage extends AppCompatActivity {
 
         if (isPortrait()){
             Toast.makeText(BreakdownUsage.this, "Turn for better view", Toast.LENGTH_SHORT ).show();
+            findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
+        }
+        else{
+            findViewById(R.id.bottom_navigation).setVisibility(View.INVISIBLE);
         }
 
         switch (breakdown){
@@ -98,29 +108,42 @@ public class BreakdownUsage extends AppCompatActivity {
                                 createChart(R.color.electric, " ");
                                 setTotals("kWh");
                                 break;
-            case "water":breakdownImage.setBackgroundResource(R.drawable.water);
-                            bkdTitle.setText("Water & Sewer (kGal)");
-//                            breakdowntitle.setBackgroundColor(ContextCompat.getColor(this, R.color.water));
-//                            readCSV(getFileStreamPath("trackedData.csv"));
-                            break;
-            case "gas":breakdownImage.setBackgroundResource(R.drawable.gas);
-                        bkdTitle.setText("Natural Gas (DTh)");
-//                        breakdowntitle.setBackgroundColor(ContextCompat.getColor(this, R.color.gas));
-//                        readCSV(getFileStreamPath("trackedData.csv"));
-                        createChart(R.color.gas, " ");
-                        setTotals("DTh");
-                        break;
-            case "thermostat":breakdownImage.setBackgroundResource(R.drawable.thermostat);
-                        bkdTitle.setText("HVAC (MMBtu)");
-//                        breakdowntitle.setBackgroundColor(ContextCompat.getColor(this, R.color.waste));
-//                        readCSV(getFileStreamPath("trackedData.csv"));
-                        createChart(R.color.hvac, " ");
-                        setTotals("MMBtu");
-                        impact.setText("");
-                        break;
         }
+        bottom_menu.setSelectedItemId(R.id.action_history);
 
     }
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener()
+    {
+        @Override
+        public boolean onNavigationItemSelected(MenuItem item)
+        {
+            switch (item.getItemId())
+            {
+                case R.id.action_timer:
+                    Intent r = new Intent(BreakdownUsage.this, Alarm.class);
+                    startActivity(r);
+                    finish();
+                    break;
+                case R.id.action_daily:
+                    Intent s = new Intent(BreakdownUsage.this, SleepTrack.class);
+                    startActivity(s);
+                    finish();
+                    break;
+                case R.id.action_history:
+//                    Intent t = new Intent(BreakdownUsage.this, MainActivity.class);
+//                    startActivity(t);
+//                    finish();
+                    break;
+                case R.id.action_setting:
+                    Intent u = new Intent(BreakdownUsage.this, SettingsActivity.class);
+                    startActivity(u);
+                    //finish();
+                    break;
+            }
+            return false;
+        }
+    };
 
     private boolean isPortrait(){
         return (getResources().getConfiguration().orientation==ORIENTATION_PORTRAIT);

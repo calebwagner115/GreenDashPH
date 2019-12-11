@@ -44,6 +44,7 @@ public class SleepTrack extends AppCompatActivity implements SensorEventListener
                 Sensor.TYPE_ACCELEROMETER);
         bottom_menu = findViewById(R.id.bottom_navigation);
         bottom_menu.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        bottom_menu.setSelectedItemId(R.id.action_daily);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -65,7 +66,8 @@ public class SleepTrack extends AppCompatActivity implements SensorEventListener
                     //finish();
                     break;
                 case R.id.action_history:
-                    Intent t = new Intent(SleepTrack.this, MainActivity.class);
+                    Intent t = new Intent(SleepTrack.this, BreakdownUsage.class);
+                    t.putExtra("Breakdown","electricity");
                     startActivity(t);
                     finish();
                     break;

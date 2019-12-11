@@ -51,20 +51,21 @@ public class Alarm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
-        status="off";
-        requestPermissions(new String[] {Manifest.permission.WAKE_LOCK}, 1);
+        status = "off";
+        requestPermissions(new String[]{Manifest.permission.WAKE_LOCK}, 1);
 
 
         if (checkSelfPermission(Manifest.permission.WAKE_LOCK) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[] {Manifest.permission.WAKE_LOCK}, 1);
+            requestPermissions(new String[]{Manifest.permission.WAKE_LOCK}, 1);
         }
 
 
-         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         bottom_menu = findViewById(R.id.bottom_navigation);
         bottom_menu.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         textAlarmPrompt = (TextView) findViewById(R.id.alarmprompt);
         SetAlarm = (Button) findViewById(R.id.startAlaram);
+        bottom_menu.setSelectedItemId(0);
 
 
         //buttonstartSetDialog = (Button) findViewById(R.id.startAlaram);
@@ -72,21 +73,20 @@ public class Alarm extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if(SetAlarm.getText().equals("Set Alarm Time")) {
+                if (SetAlarm.getText().equals("Set Alarm Time")) {
                     textAlarmPrompt.setText("");
                     openTimePickerDialog(false);
 
-                }
-                else{
+                } else {
                     SetAlarm.setText("Set Alarm Time");
                     alarmManager.cancel(pendingIntent);
                     textAlarmPrompt.setText("No Alarm Set");
-                    status="off";
+                    status = "off";
                 }
             }
         });
-
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -126,7 +126,8 @@ public class Alarm extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.action_history:
-                    Intent t = new Intent(Alarm.this, MainActivity.class);
+                    Intent t = new Intent(Alarm.this, BreakdownUsage.class);
+                    t.putExtra("Breakdown","electricity");
                     startActivity(t);
                     finish();
                     break;
