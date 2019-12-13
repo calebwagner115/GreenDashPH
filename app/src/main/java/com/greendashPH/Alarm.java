@@ -266,7 +266,7 @@ public class Alarm extends AppCompatActivity implements SensorEventListener {
             SetAlarm.setText("Cancel Alarm");
             findViewById(R.id.bottom_navigation).setVisibility(View.INVISIBLE);
             start();
-            Toast.makeText(this, "Please keep phone charging",Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Please keep phone charging",Toast.LENGTH_SHORT).show();
         }
 
     }
