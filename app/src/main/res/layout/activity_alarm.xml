@@ -15,24 +15,30 @@
             android:id="@+id/startAlaram"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Set Alarm Time" />
+            android:text="Set Alarm Time"
+            android:textSize="24dp"/>
 
         <TextView
             android:id="@+id/alarmprompt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textSize="29dp"
+            android:textAllCaps="true"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TEST: Set Alarm"
-            android:onClick="setAlarm"/>
+            android:onClick="setAlarm"
+            android:visibility="invisible"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="STOP"
             android:onClick="stopAlarm"
+            android:id="@+id/stopalarm"
+            android:textSize="24dp"
             />
     </LinearLayout>
 

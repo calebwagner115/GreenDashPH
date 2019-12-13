@@ -1,14 +1,16 @@
 package com.greendashPH;
 
 import android.Manifest;
-import android.app.ActionBar;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Parcel;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.PersistableBundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -22,15 +24,28 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Set;
+import java.util.TimeZone;
 
-public class Alarm extends AppCompatActivity {
+public class Alarm extends AppCompatActivity implements SensorEventListener {
     BottomNavigationView bottom_menu;
     int perm=-1;
     String status;
     PendingIntent pendingIntent;
     Button SetAlarm;
     AlarmManager alarmManager;
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private long mLastUpdate;
+    private String row;
+    Button Stop;
+
+    FileOutputStream trackedData;
+    OutputStreamWriter osw;
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
@@ -69,20 +84,31 @@ public class Alarm extends AppCompatActivity {
         textAlarmPrompt = (TextView) findViewById(R.id.alarmprompt);
         SetAlarm = (Button) findViewById(R.id.startAlaram);
         bottom_menu.setSelectedItemId(R.id.action_timer);
+        mLastUpdate = System.currentTimeMillis();
+        mSensorManager = (SensorManager)
+                getSystemService(SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        Stop= findViewById(R.id.stopalarm);
+        Stop.setEnabled(false);
 
         SetAlarm.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 if (SetAlarm.getText().equals("Set Alarm Time")) {
+                    Stop.setEnabled(true);
                     textAlarmPrompt.setText("");
                     openTimePickerDialog(false);
 
                 } else {
+                    Stop.setEnabled(false);
                     SetAlarm.setText("Set Alarm Time");
                     alarmManager.cancel(pendingIntent);
                     textAlarmPrompt.setText("No Alarm Set");
                     status = "off";
+                    findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
+
                 }
             }
         });
@@ -138,11 +164,11 @@ public class Alarm extends AppCompatActivity {
             {
                 case R.id.action_timer:
                     break;
-                case R.id.action_daily:
-                    Intent s = new Intent(Alarm.this, SleepTrack.class);
-                    startActivity(s);
-                    finish();
-                    break;
+//                case R.id.action_daily:
+//                    Intent s = new Intent(Alarm.this, SleepTrack.class);
+//                    startActivity(s);
+//                    finish();
+//                    break;
                 case R.id.action_history:
                     Intent t = new Intent(Alarm.this, BreakdownUsage.class);
                     t.putExtra("Breakdown","electricity");
@@ -162,19 +188,23 @@ public class Alarm extends AppCompatActivity {
 
         AlarmManager alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
+        Stop.setEnabled(true);
         if(status.equals("off")){
             intent.putExtra("status", "on");
+
             status="on";
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
             Calendar time = Calendar.getInstance();
             time.setTimeInMillis(System.currentTimeMillis());
             time.add(Calendar.SECOND, 5);
             alarmMgr.set(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
+
         } else{
             Toast.makeText(getApplicationContext(), "stop", Toast.LENGTH_LONG).show();
             intent.putExtra("status", "off");
             status="off";
             sendBroadcast(intent);
+            Stop.setEnabled(false);
         }
 
     }
@@ -225,14 +255,18 @@ public class Alarm extends AppCompatActivity {
 
         Intent intent = new Intent(this, AlarmReceiver.class);
         if(status.equals("off")&&SetAlarm.getText().equals("Set Alarm Time")){
+            Stop.setEnabled(true);
             intent.putExtra("status", "on");
             status="on";
             pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
             Calendar time = Calendar.getInstance();
             time.setTimeInMillis(System.currentTimeMillis());
             alarmManager.set(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(), pendingIntent);
-            textAlarmPrompt.setText("\n\n***\n" + "Alarm is set " + targetCal.getTime() + "\n" + "***\n");
+            String s = new SimpleDateFormat("hh:mm a").format(targetCal.getTimeInMillis());
+            textAlarmPrompt.setText("\n" +  "Current Alarm: "+ s + "\n");
             SetAlarm.setText("Cancel Alarm");
+            findViewById(R.id.bottom_navigation).setVisibility(View.INVISIBLE);
+            start();
         }
 
     }
@@ -243,11 +277,71 @@ public class Alarm extends AppCompatActivity {
             intent.putExtra("status", "off");
             sendBroadcast(intent);
             status="off";
+            stop();
+            Stop.setEnabled(false);
+            findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
         }
     }
 
-    public static void alarmActivated(){
+    public void start() {
+        try {
+            trackedData = openFileOutput("trackedData.csv", Context.MODE_PRIVATE);
 
+            osw = new OutputStreamWriter(trackedData);
+
+        } catch (Exception e) {
+            Toast.makeText(this, "Could not start sleep tracker!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    public void stop() {
+
+        try {
+            osw.flush();
+            osw.close();
+
+            Intent breakdownIntent = new Intent(this, BreakdownUsage.class);
+            breakdownIntent.putExtra("Breakdown","electricity");
+            startActivity(breakdownIntent);
+
+        } catch (Exception e) {
+            Toast.makeText(this, "Could not stop data recording", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            long actualTime = System.currentTimeMillis();
+            if (actualTime  - mLastUpdate > 1000)  {
+                mLastUpdate = actualTime;
+                float x = event.values[0],  y = event.values[1],
+                        z = event.values[2];
+                double gravity = 9.81;
+                float move = Math.abs(x) + Math.abs(y) + Math.abs(z) - (float)gravity;
+                move = Math.abs(move);
+
+                row = "" + move + "," + mLastUpdate + "\n";
+
+                try {
+                    osw.write(row);
+                    System.out.println(row);
+
+                } catch (Exception e) { }
+            }
+        }
+    }
+
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+
+    protected void onResume()  {
+        super.onResume();
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    protected void onPause() {
+        mSensorManager.unregisterListener(this);
+        super.onPause();
     }
 
 

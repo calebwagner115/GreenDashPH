@@ -40,9 +40,10 @@ public class SleepTrack extends AppCompatActivity implements SensorEventListener
                 getSystemService(SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(
                 Sensor.TYPE_ACCELEROMETER);
+
         bottom_menu = findViewById(R.id.bottom_navigation);
         bottom_menu.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        bottom_menu.setSelectedItemId(R.id.action_daily);
+        //bottom_menu.setSelectedItemId(R.id.action_daily);
     }
 
     private void updateNavigationBarState(int actionId){
@@ -68,15 +69,15 @@ public class SleepTrack extends AppCompatActivity implements SensorEventListener
                     startActivity(r);
 
                      updateNavigationBarState(R.id.action_timer);
-//                    finish();
+                    finish();
                     break;
-                case R.id.action_daily:
-//                    Intent s = new Intent(SleepTrack.this, SleepTrack.class);
-//                    startActivity(s);
-                    //updateNavigationBarState(R.id.action_daily);
+//                case R.id.action_daily:
+////                    Intent s = new Intent(SleepTrack.this, SleepTrack.class);
+////                    startActivity(s);
+//                    //updateNavigationBarState(R.id.action_daily);
 
                     //finish();
-                    break;
+                    //break;
                 case R.id.action_history:
                     Intent t = new Intent(SleepTrack.this, BreakdownUsage.class);
                     t.putExtra("Breakdown","electricity");

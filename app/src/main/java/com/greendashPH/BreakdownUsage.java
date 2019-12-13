@@ -99,11 +99,11 @@ public class BreakdownUsage extends AppCompatActivity {
                     startActivity(r);
                     finish();
                     break;
-                case R.id.action_daily:
-                    Intent s = new Intent(BreakdownUsage.this, SleepTrack.class);
-                    startActivity(s);
-                    finish();
-                    break;
+//                case R.id.action_daily:
+//                    Intent s = new Intent(BreakdownUsage.this, SleepTrack.class);
+//                    startActivity(s);
+//                    finish();
+//                    break;
                 case R.id.action_history:
 //                    Intent t = new Intent(BreakdownUsage.this, MainActivity.class);
 //                    startActivity(t);

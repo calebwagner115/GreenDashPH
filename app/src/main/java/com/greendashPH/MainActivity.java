@@ -44,11 +44,11 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(r);
                     finish();
                     break;
-                case R.id.action_daily:
-                    Intent s = new Intent(MainActivity.this, SleepTrack.class);
-                    startActivity(s);
-                    finish();
-                    break;
+//                case R.id.action_daily:
+//                    Intent s = new Intent(MainActivity.this, SleepTrack.class);
+//                    startActivity(s);
+//                    finish();
+//                    break;
                 case R.id.action_history:
                     Intent t = new Intent(MainActivity.this, Alarm.class);
                     startActivity(t);
