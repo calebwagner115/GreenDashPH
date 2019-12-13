@@ -28,7 +28,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
         else{
             mp.pause();
-            Toast.makeText(context, "stop", Toast.LENGTH_LONG).show();
         }
     }
 }
