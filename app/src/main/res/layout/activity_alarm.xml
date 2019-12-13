@@ -9,22 +9,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@android:color/black"
         android:padding="10dp" >
-
-        <Button
-            android:id="@+id/startAlaram"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Set Alarm Time"
-            android:textSize="24dp"/>
-
         <TextView
             android:id="@+id/alarmprompt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
+            android:textColor="@color/orange"
             android:textSize="29dp"
-            android:textAllCaps="true"/>
+            android:textAllCaps="true" />
+        <Button
+            android:id="@+id/startAlaram"
+            android:textColor="#ffffff"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Set Alarm Time"
+            android:background="#196699"
+            android:textSize="24dp"/>
+
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,8 +38,10 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="STOP"
+            android:text="STOP and SEE RESULTS"
+            android:background="@color/orange"
             android:onClick="stopAlarm"
+            android:textColor="#ffffff"
             android:id="@+id/stopalarm"
             android:textSize="24dp"
             />

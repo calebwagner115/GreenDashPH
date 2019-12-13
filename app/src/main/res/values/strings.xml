@@ -26,7 +26,7 @@
     </string>
 
     <string name="pref_default_title">Target Sleep (Hours)</string>
-    <string name="pref_default_display_budget_target">12</string>
+    <string name="pref_default_display_budget_target">9</string>
 
     <string name="pref_title_add_friends_to_messages">Ask permission to send data to friends</string>
     <string-array name="pref_example_list_titles">

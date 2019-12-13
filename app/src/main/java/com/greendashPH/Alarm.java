@@ -90,22 +90,22 @@ public class Alarm extends AppCompatActivity implements SensorEventListener {
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         Stop= findViewById(R.id.stopalarm);
-        Stop.setEnabled(false);
+        Stop.setVisibility(View.INVISIBLE);
 
         SetAlarm.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 if (SetAlarm.getText().equals("Set Alarm Time")) {
-                    Stop.setEnabled(true);
+                    Stop.setVisibility(View.VISIBLE);
                     textAlarmPrompt.setText("");
                     openTimePickerDialog(false);
 
                 } else {
-                    Stop.setEnabled(false);
+                    Stop.setVisibility(View.INVISIBLE);
                     SetAlarm.setText("Set Alarm Time");
                     alarmManager.cancel(pendingIntent);
-                    textAlarmPrompt.setText("No Alarm Set");
+                    textAlarmPrompt.setText("");
                     status = "off";
                     findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
 
@@ -187,7 +187,7 @@ public class Alarm extends AppCompatActivity implements SensorEventListener {
 
         AlarmManager alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
-        Stop.setEnabled(true);
+        Stop.setVisibility(View.VISIBLE);
         if(status.equals("off")){
             intent.putExtra("status", "on");
 
@@ -203,7 +203,7 @@ public class Alarm extends AppCompatActivity implements SensorEventListener {
             intent.putExtra("status", "off");
             status="off";
             sendBroadcast(intent);
-            Stop.setEnabled(false);
+            Stop.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -254,7 +254,7 @@ public class Alarm extends AppCompatActivity implements SensorEventListener {
 
         Intent intent = new Intent(this, AlarmReceiver.class);
         if(status.equals("off")&&SetAlarm.getText().equals("Set Alarm Time")){
-            Stop.setEnabled(true);
+            Stop.setVisibility(View.VISIBLE);
             intent.putExtra("status", "on");
             status="on";
             pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
@@ -262,10 +262,11 @@ public class Alarm extends AppCompatActivity implements SensorEventListener {
             time.setTimeInMillis(System.currentTimeMillis());
             alarmManager.set(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(), pendingIntent);
             String s = new SimpleDateFormat("hh:mm a").format(targetCal.getTimeInMillis());
-            textAlarmPrompt.setText("\n" +  "Current Alarm: "+ s + "\n");
+            textAlarmPrompt.setText(  "Alarm: "+ s + "\n");
             SetAlarm.setText("Cancel Alarm");
             findViewById(R.id.bottom_navigation).setVisibility(View.INVISIBLE);
             start();
+            Toast.makeText(this, "Please keep phone charging",Toast.LENGTH_SHORT);
         }
 
     }
@@ -277,7 +278,7 @@ public class Alarm extends AppCompatActivity implements SensorEventListener {
             sendBroadcast(intent);
             status="off";
             stop();
-            Stop.setEnabled(false);
+            Stop.setVisibility(View.INVISIBLE);
             findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
         }
     }
